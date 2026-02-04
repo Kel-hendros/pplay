@@ -9,8 +9,8 @@
  * 3. Mock responses (for testing without API)
  */
 
-const OPENAI_API_KEY = 'YOUR_OPENAI_API_KEY'; // Replace with your key for development
-const USE_MOCK = true; // Set to false when you have a real API key or edge function
+const OPENAI_API_KEY = ''; // Not needed - using Edge Function
+const USE_MOCK = false; // Using Supabase Edge Function for real AI
 
 const OpenAI = {
     conversationHistory: [],

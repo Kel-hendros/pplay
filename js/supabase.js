@@ -6,7 +6,7 @@
  */
 
 const SUPABASE_URL = 'https://idkmyquqqedjhwsemjwh.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_KnbL4Nc-sh_DaHmgK3JIzA_ZUAMq4sv';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlka215cXVxcWVkamh3c2VtandoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyMTE5MDMsImV4cCI6MjA4NTc4NzkwM30.pF1XJgUQx7tcCjTIVAy5fRcqRbHr-TS9ixBrZWLJ-F0';
 
 // Check if Supabase is configured
 const isSupabaseConfigured = () => {
