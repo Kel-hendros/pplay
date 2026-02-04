@@ -165,8 +165,14 @@ const ScenarioPlayView = {
                 <div class="scenario-chat">
                     <div class="chat-header">
                         <span class="chat-scenario-title">${scenario.title}</span>
-                        <div class="chat-progress">
-                            <span>Turno ${ScenarioPlayView.turnNumber + 1}</span>
+                        <div class="chat-header-right">
+                            <span class="ai-indicator" id="ai-indicator">
+                                <span class="ai-indicator-dot"></span>
+                                <span class="ai-indicator-text">Conectando...</span>
+                            </span>
+                            <div class="chat-progress">
+                                <span>Turno ${ScenarioPlayView.turnNumber + 1}</span>
+                            </div>
                         </div>
                     </div>
 
@@ -335,6 +341,9 @@ const ScenarioPlayView = {
             // Remove typing indicator
             typingEl.remove();
 
+            // Update AI indicator based on response
+            ScenarioPlayView.updateAIIndicator(response.isAI);
+
             // Check for scenario completion
             if (response.message.includes('[SCENARIO_COMPLETE]') || response.isEnding) {
                 response.message = response.message.replace('[SCENARIO_COMPLETE]', '');
@@ -393,6 +402,28 @@ const ScenarioPlayView = {
                 ${opt}
             </button>
         `).join('');
+    },
+
+    /**
+     * Update AI indicator
+     */
+    updateAIIndicator: (isAI) => {
+        const indicator = document.getElementById('ai-indicator');
+        if (!indicator) return;
+
+        if (isAI) {
+            indicator.className = 'ai-indicator ai-active';
+            indicator.innerHTML = `
+                <span class="ai-indicator-dot"></span>
+                <span class="ai-indicator-text">GPT-4 Activo</span>
+            `;
+        } else {
+            indicator.className = 'ai-indicator ai-mock';
+            indicator.innerHTML = `
+                <span class="ai-indicator-dot"></span>
+                <span class="ai-indicator-text">Demo Mode</span>
+            `;
+        }
     },
 
     /**

@@ -61,11 +61,11 @@ Comienza la interacción. El usuario acaba de entrar en la escena.`
 
             if (USE_MOCK) {
                 response = await OpenAI.getMockResponse(userMessage, options);
-            } else if (OPENAI_API_KEY !== 'YOUR_OPENAI_API_KEY') {
-                response = await OpenAI.callOpenAI();
+                response.isAI = false;
             } else {
-                // Try Supabase Edge Function
+                // Use Supabase Edge Function (secure)
                 response = await OpenAI.callEdgeFunction();
+                response.isAI = true;
             }
 
             // Add assistant response to history
