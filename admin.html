@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perspective Play - Admin</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- Admin Navigation -->
+    <nav class="admin-navbar" id="admin-navbar">
+        <div class="navbar-brand">
+            <a href="#dashboard" class="logo">
+                <span class="logo-icon">⚙️</span>
+                <span>PP Admin</span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navbar-menu">
+            <a href="#dashboard" class="nav-link" data-route="dashboard">
+                <span class="nav-icon">📊</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="#scenarios" class="nav-link" data-route="scenarios">
+                <span class="nav-icon">🎮</span>
+                <span>Escenarios</span>
+            </a>
+            <a href="#skills" class="nav-link" data-route="skills">
+                <span class="nav-icon">⭐</span>
+                <span>Habilidades</span>
+            </a>
+        </div>
+        <div class="navbar-user" id="navbar-user">
+            <a href="../app.html" class="btn btn-ghost btn-sm">
+                <span>🔙</span>
+                <span>Volver a la App</span>
+            </a>
+            <div class="dropdown">
+                <button class="btn btn-ghost user-menu-btn" id="user-menu-btn">
+                    <div class="avatar avatar-sm admin-avatar" id="user-avatar">A</div>
+                    <span id="user-name">Admin</span>
+                </button>
+                <div class="dropdown-menu">
+                    <button class="dropdown-item" id="logout-btn">Cerrar Sesión</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Access Denied Screen -->
+    <div class="access-denied" id="access-denied" style="display: none;">
+        <div class="access-denied-content">
+            <div class="access-denied-icon">🚫</div>
+            <h2>Acceso Denegado</h2>
+            <p>No tienes permisos de administrador para acceder a esta sección.</p>
+            <a href="../app.html" class="btn btn-primary">Volver a la App</a>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="admin-main" id="admin-main">
+        <!-- Loading State -->
+        <div class="loading-container" id="loading">
+            <div class="spinner spinner-lg"></div>
+            <p>Verificando permisos...</p>
+        </div>
+
+        <!-- Views will be rendered here -->
+        <div id="view-container"></div>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Core Scripts -->
+    <script src="js/supabase.js"></script>
+    <script src="js/auth.js"></script>
+
+    <!-- Admin Scripts -->
+    <script src="js/admin/admin-supabase.js"></script>
+    <script src="js/admin/components/form-builder.js"></script>
+    <script src="js/admin/components/json-editor.js"></script>
+    <script src="js/admin/components/character-form.js"></script>
+    <script src="js/admin/components/prompt-generator.js"></script>
+    <script src="js/admin/views/admin-dashboard.js"></script>
+    <script src="js/admin/views/scenarios-list.js"></script>
+    <script src="js/admin/views/scenario-editor.js"></script>
+    <script src="js/admin/views/skills-manager.js"></script>
+    <script src="js/admin/admin-app.js"></script>
+</body>
+</html>
