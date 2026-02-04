@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perspective Play</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/scenarios.css">
+</head>
+<body>
+    <!-- App Navigation -->
+    <nav class="app-navbar" id="app-navbar">
+        <div class="navbar-brand">
+            <a href="#character-sheet" class="logo">Perspective Play</a>
+        </div>
+        <div class="navbar-menu" id="navbar-menu">
+            <a href="#character-sheet" class="nav-link" data-route="character-sheet">
+                <span class="nav-icon">📊</span>
+                <span>Mi Personaje</span>
+            </a>
+            <a href="#scenarios" class="nav-link" data-route="scenarios">
+                <span class="nav-icon">🎮</span>
+                <span>Escenarios</span>
+            </a>
+            <a href="#profile" class="nav-link" data-route="profile">
+                <span class="nav-icon">👤</span>
+                <span>Perfil</span>
+            </a>
+        </div>
+        <div class="navbar-user" id="navbar-user">
+            <div class="dropdown">
+                <button class="btn btn-ghost user-menu-btn" id="user-menu-btn">
+                    <div class="avatar avatar-sm" id="user-avatar">U</div>
+                    <span id="user-name">Usuario</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="#profile" class="dropdown-item">Mi Perfil</a>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" id="logout-btn">Cerrar Sesión</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Auth Modal -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="auth-modal-title">Iniciar Sesión</h3>
+                <button class="modal-close" id="auth-modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form">
+                    <div class="form-group">
+                        <label class="form-label" for="login-email">Email</label>
+                        <input type="email" id="login-email" class="form-input" placeholder="tu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="login-password">Contraseña</label>
+                        <input type="password" id="login-password" class="form-input" placeholder="Tu contraseña" required>
+                    </div>
+                    <div class="form-error" id="login-error"></div>
+                    <button type="submit" class="btn btn-primary btn-large" style="width: 100%">
+                        Iniciar Sesión
+                    </button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="register-form" class="auth-form" style="display: none">
+                    <div class="form-group">
+                        <label class="form-label" for="register-username">Nombre de usuario</label>
+                        <input type="text" id="register-username" class="form-input" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="register-email">Email</label>
+                        <input type="email" id="register-email" class="form-input" placeholder="tu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="register-password">Contraseña</label>
+                        <input type="password" id="register-password" class="form-input" placeholder="Mínimo 6 caracteres" required minlength="6">
+                    </div>
+                    <div class="form-error" id="register-error"></div>
+                    <button type="submit" class="btn btn-primary btn-large" style="width: 100%">
+                        Crear Cuenta
+                    </button>
+                </form>
+
+                <div class="auth-switch">
+                    <span id="auth-switch-text">¿No tienes cuenta?</span>
+                    <button type="button" class="btn btn-ghost" id="auth-switch-btn">Regístrate</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="app-main" id="app-main">
+        <!-- Loading State -->
+        <div class="loading-container" id="loading">
+            <div class="spinner spinner-lg"></div>
+            <p>Cargando...</p>
+        </div>
+
+        <!-- Views will be rendered here -->
+        <div id="view-container"></div>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Scripts -->
+    <script src="js/supabase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/openai.js"></script>
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/skill-card.js"></script>
+    <script src="js/components/scenario-card.js"></script>
+    <script src="js/views/character-sheet.js"></script>
+    <script src="js/views/scenarios-catalog.js"></script>
+    <script src="js/views/scenario-play.js"></script>
+    <script src="js/views/profile.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

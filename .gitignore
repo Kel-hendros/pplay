@@ -1,0 +1,14 @@
+# Supabase
+supabase/.temp/
+.env
+.env.local
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Claude local settings
+.claude/settings.local.json
