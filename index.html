@@ -1,167 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perspective Play - Mejora tus Habilidades Blandas</title>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/components.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>Perspective Play — Aethelgard</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar-brand">
-            <span class="logo">Perspective Play</span>
-        </div>
-        <div class="navbar-menu">
-            <a href="#features">Características</a>
-            <a href="#how-it-works">Cómo Funciona</a>
-            <a href="app.html" class="btn btn-primary">Iniciar Sesión</a>
-        </div>
-    </nav>
+<div id="root"></div>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Mejora tus Habilidades Blandas<br><span class="highlight">Jugando</span></h1>
-                <p class="hero-subtitle">
-                    Practica negociación, comunicación y liderazgo en escenarios realistas
-                    con personajes manejados por IA. Obtén feedback basado en bibliografía
-                    especializada y certifica tu crecimiento.
-                </p>
-                <div class="hero-cta">
-                    <a href="app.html#register" class="btn btn-primary btn-large">Comenzar Gratis</a>
-                    <a href="#how-it-works" class="btn btn-secondary btn-large">Ver Demo</a>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="character-sheet-preview">
-                    <div class="skill-preview">
-                        <span class="skill-icon">💬</span>
-                        <span class="skill-name">Comunicación</span>
-                        <div class="skill-bar"><div class="skill-progress" style="width: 70%"></div></div>
-                    </div>
-                    <div class="skill-preview">
-                        <span class="skill-icon">🤝</span>
-                        <span class="skill-name">Negociación</span>
-                        <div class="skill-bar"><div class="skill-progress" style="width: 45%"></div></div>
-                    </div>
-                    <div class="skill-preview">
-                        <span class="skill-icon">🎯</span>
-                        <span class="skill-name">Persuasión</span>
-                        <div class="skill-bar"><div class="skill-progress" style="width: 60%"></div></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
-        <!-- Features Section -->
-        <section id="features" class="features">
-            <h2>¿Por qué Perspective Play?</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🎮</div>
-                    <h3>Aprende Jugando</h3>
-                    <p>Escenarios interactivos donde practicas situaciones reales de trabajo sin riesgos.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🤖</div>
-                    <h3>Personajes con IA</h3>
-                    <p>Interactúa con colegas, jefes y clientes simulados que responden de forma realista.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📚</div>
-                    <h3>Base Académica</h3>
-                    <p>Todo feedback está respaldado por bibliografía de expertos reconocidos.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📈</div>
-                    <h3>Progresión Visual</h3>
-                    <p>Ve crecer tus habilidades en tu Hoja de Personaje estilo RPG.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🏆</div>
-                    <h3>Certificaciones</h3>
-                    <p>Obtén certificados que validan tu dominio de cada habilidad.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔄</div>
-                    <h3>Practica sin Límites</h3>
-                    <p>Repite escenarios hasta dominarlos. Cada intento es una oportunidad de mejora.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- How it Works Section -->
-        <section id="how-it-works" class="how-it-works">
-            <h2>¿Cómo Funciona?</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Elige un Escenario</h3>
-                    <p>Explora nuestro catálogo de situaciones laborales: negociaciones, conflictos, presentaciones y más.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Vive la Experiencia</h3>
-                    <p>Interactúa con personajes IA, toma decisiones y recibe feedback inmediato basado en técnicas probadas.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Crece y Certifica</h3>
-                    <p>Acumula puntos, sube de nivel en tus habilidades y obtén certificaciones de tu progreso.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Scenario Preview -->
-        <section class="scenario-preview">
-            <h2>Escenario de Ejemplo</h2>
-            <div class="scenario-card-large">
-                <div class="scenario-header">
-                    <span class="scenario-difficulty beginner">Principiante</span>
-                    <h3>El Dilema del Budget de Marketing</h3>
-                </div>
-                <p class="scenario-description">
-                    Eres el Gerente de Marketing Digital. En una reunión con el Director de Ventas
-                    y la CMO, debes negociar la distribución del budget del Q2. Cada uno tiene
-                    intereses diferentes y el ambiente está tenso.
-                </p>
-                <div class="scenario-skills">
-                    <span class="skill-tag">Negociación</span>
-                    <span class="skill-tag">Comunicación Efectiva</span>
-                </div>
-                <div class="scenario-bibliography">
-                    <span class="bibliography-label">Basado en:</span>
-                    <span class="bibliography-item">"Getting to Yes" - Fisher & Ury</span>
-                    <span class="bibliography-item">"Crucial Conversations" - Patterson</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="cta-section">
-            <h2>Empieza a Mejorar Hoy</h2>
-            <p>Crea tu cuenta gratuita y accede a escenarios de práctica.</p>
-            <a href="app.html#register" class="btn btn-primary btn-large">Crear Cuenta Gratis</a>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-brand">
-                <span class="logo">Perspective Play</span>
-                <p>Mejora tus habilidades blandas de forma práctica y divertida.</p>
-            </div>
-            <div class="footer-links">
-                <a href="#">Términos de Uso</a>
-                <a href="#">Privacidad</a>
-                <a href="#">Contacto</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Perspective Play. Todos los derechos reservados.</p>
-        </div>
-    </footer>
+<script src="content.js"></script>
+<script src="claude-shim.js"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="ui.jsx"></script>
+<script type="text/babel" src="screens-shell.jsx"></script>
+<script type="text/babel" src="screens-act1.jsx"></script>
+<script type="text/babel" src="screens-npcs.jsx"></script>
+<script type="text/babel" src="screens-act3.jsx"></script>
+<script type="text/babel" src="app.jsx"></script>
 </body>
 </html>
