@@ -22,6 +22,7 @@ const DEFAULT_ALLOWED_ORIGINS = [
   'null',
   'http://localhost',
   'http://127.0.0.1',
+  'https://kel-hendros.github.io',
 ]
 
 function buildAllowedOrigins(): string[] {
