@@ -18,8 +18,9 @@ const __AOI_STYLE = `
   .aoi-fab:hover{opacity:1;color:var(--ink);border-color:var(--ink-4)}
   .aoi-overlay{position:fixed;inset:0;z-index:2147483646;
     background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
-    display:flex;align-items:center;justify-content:center;padding:20px}
-  .aoi-modal{width:100%;max-width:560px;max-height:calc(100vh - 40px);
+    display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+  .aoi-modal{width:100%;max-width:560px;
+    max-height:calc(100vh - 40px);max-height:calc(100dvh - 40px);
     display:flex;flex-direction:column;background:var(--bg-2);
     border:1px solid var(--line);border-radius:16px;overflow:hidden;
     box-shadow:0 24px 64px rgba(0,0,0,.5);font-family:var(--sans);color:var(--ink)}
@@ -31,7 +32,8 @@ const __AOI_STYLE = `
   .aoi-x{appearance:none;border:0;background:transparent;color:var(--ink-3);
     width:26px;height:26px;border-radius:7px;cursor:pointer;font-size:15px}
   .aoi-x:hover{background:var(--surface-2);color:var(--ink)}
-  .aoi-body{padding:18px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;min-height:0}
+  .aoi-body{padding:18px;flex:1 1 auto;min-height:0;-webkit-overflow-scrolling:touch;
+    overflow-y:auto;display:flex;flex-direction:column;gap:14px}
 
   .aoi-gate{padding:26px 22px;display:flex;flex-direction:column;gap:12px}
   .aoi-gate p{font-size:13px;color:var(--ink-2);line-height:1.5;margin:0}
@@ -71,8 +73,7 @@ const __AOI_STYLE = `
     background:var(--surface);color:var(--ink-3);border-radius:6px;padding:3px 7px;cursor:pointer}
   .aoi-copy:hover{color:var(--ink);border-color:var(--ink-4)}
   .aoi-pre{margin:0;padding:0 13px 13px;font-family:var(--mono);font-size:11px;
-    line-height:1.55;color:var(--ink-2);white-space:pre-wrap;word-break:break-word;
-    max-height:320px;overflow-y:auto}
+    line-height:1.55;color:var(--ink-2);white-space:pre-wrap;word-break:break-word}
 `;
 
 // Links each dossier actor to its runtime prompt + brief + result schema.
