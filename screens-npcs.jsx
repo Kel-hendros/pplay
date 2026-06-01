@@ -393,4 +393,9 @@ function ScreenHarrison({ onDone, progress, siaResult, siaSummary }) {
   );
 }
 
-Object.assign(window, { ScreenSia, ScreenHarrison, PLAYER_CONTEXT });
+// Exposed for the read-only backoffice (ActorInspector). These are the raw
+// actor "parameters" — the system prompts and the Harrison context modulation.
+Object.assign(window, {
+  ScreenSia, ScreenHarrison,
+  PLAYER_CONTEXT, SIA_SYSTEM, HARRISON_SYSTEM_BASE, harrisonSystem,
+});

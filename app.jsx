@@ -78,6 +78,7 @@ function App() {
   return (
     <>
       <div className="pp-app">{screen}</div>
+      <ActorInspector />
       <TweaksPanel title="Tweaks">
         <TweakSection label="Tema" />
         <TweakRadio
