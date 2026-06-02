@@ -10,7 +10,7 @@ function ScreenMonologue({ onDone, progress, ctx }) {
     setVoting(true);
     setPhase("voting");
     // Use Claude to produce coherent vote lines
-    const prompt = `Sos el motor narrativo de un juego de Drama Theory. Devolvé SOLO un JSON con votos del Board de Aethelgard.
+    const prompt = `Eres el motor narrativo de un juego de Drama Theory. Devuelve SOLO un JSON con votos del Board de Aethelgard.
 
 Estado del juego:
 - Decisión M2 (estrategia mediática): ${ctx.decision_m2}
@@ -20,7 +20,7 @@ Estado del juego:
 - Resumen Harrison: ${ctx.harrison_summary}
 - Monólogo final del jugador (puede estar vacío): "${mono || "(no habló)"}"
 
-Devolvé:
+Devuelve:
 {
   "outcome": "rechazada" | "aceptada",
   "sia_vote": "no" | "yes" | "abs",
@@ -56,14 +56,13 @@ JSON:`;
   if (phase === "intro") {
     return (
       <div className="pp-screen">
-        <StatusBar />
         <TopBar progress={progress} label="M5 / 06" />
         <div className="pp-body">
           <p className="eyebrow eyebrow-dot">Momento de verdad</p>
           <h2 className="title">La sala del Board</h2>
           <p className="lede" style={{ fontFamily: "var(--serif)", fontStyle: "italic", fontSize: 19 }}>Séptimo piso. Vista al río. Alrededor de la mesa están los miembros del Board. Lord Harrison en la cabecera, las manos cruzadas. A su lado los demás directores — pero todos en la sala saben que cuando Harrison se decida, los demás lo van a seguir.</p>
           <p className="lede" style={{ fontFamily: "var(--serif)", fontStyle: "italic", fontSize: 19 }}>Sia no está. Pero todos saben lo que pasó — o lo que creen que pasó.</p>
-          <p className="body" style={{ marginTop: 18, color: "var(--ink)" }}>Harrison te mira. <em style={{ color: "var(--accent)", fontStyle: "normal" }}>“Antes de votar, ¿querés decir algo?”</em></p>
+          <p className="body" style={{ marginTop: 18, color: "var(--ink)" }}>Harrison te mira. <em style={{ color: "var(--accent)", fontStyle: "normal" }}>“Antes de votar, ¿quieres decir algo?”</em></p>
           <Btn primary block lg sticky onClick={() => setPhase("speak")}>Tomar la palabra</Btn>
         </div>
       </div>
@@ -73,15 +72,14 @@ JSON:`;
   if (phase === "speak") {
     return (
       <div className="pp-screen">
-        <StatusBar />
         <TopBar progress={progress} label="M5 / 06" />
         <div className="pp-body">
           <p className="eyebrow">Tus últimas palabras</p>
-          <h2 className="title">Tenés un minuto.<br/><em style={{ fontStyle: "italic", color: "var(--accent)" }}>Hacelo contar.</em></h2>
+          <h2 className="title">Tienes un minuto.<br/><em style={{ fontStyle: "italic", color: "var(--accent)" }}>Hazlo contar.</em></h2>
           <textarea
             value={monologue}
             onChange={e => setMonologue(e.target.value)}
-            placeholder="Lo que digas acá puede reforzar — o contradecir — lo que ya construiste."
+            placeholder="Lo que digas aquí puede reforzar — o contradecir — lo que ya construiste."
             style={{
               width: "100%", minHeight: 220, padding: 16, marginTop: 8,
               background: "var(--surface)", border: "1px solid var(--line)",
@@ -103,7 +101,6 @@ JSON:`;
   if (phase === "voting" || voting) {
     return (
       <div className="pp-screen" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <StatusBar />
         <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 30, textAlign: "center" }}>
           <span className="dots"><span></span><span></span><span></span></span>
           <p className="eyebrow" style={{ marginTop: 18 }}>El Board delibera</p>
@@ -119,7 +116,6 @@ JSON:`;
   const labelFor = (v) => v === "no" ? "VOTA NO" : v === "yes" ? "VOTA SÍ" : "ABSTIENE";
   return (
     <div className="pp-screen">
-      <StatusBar />
       <TopBar progress={progress} label="M5 / 06" />
       <div className="pp-body">
         <p className="eyebrow eyebrow-dot">Resultado</p>
@@ -172,18 +168,18 @@ JSON:`;
 // NOT a chat. This is a post-game evaluation page: Marina analyzes the run
 // once, returns a structured report, and the player reads it. We render it as
 // a series of section cards, not chat bubbles.
-const COACH_SYSTEM = `Sos "Marina", coach senior de power skills de Perspective Play. La ficción terminó. El jugador (un/a CEO interino/a de Aethelgard, 5+ años en la empresa) acaba de salir de una crisis simulada y vino a ver tu análisis.
+const COACH_SYSTEM = `Eres "Marina", coach senior de power skills de PowerPlay. La ficción terminó. El jugador (un/a CEO interino/a de Aethelgard, 5+ años en la empresa) acaba de salir de una crisis simulada y vino a ver tu análisis.
 
-Hablás español rioplatense en tuteo. Profesional, directa, con autoridad académica. No sos un coach blando ni una NPC en personaje — sos una analista que evalúa con rigor.
+Hablas español neutro, en tuteo (tú/te/tu). Profesional, directa, con autoridad académica. No eres un coach blando ni una NPC en personaje — eres una analista que evalúa con rigor.
 
 TU TAREA:
 Devolver UN JSON con tu análisis, fundamentado en Game Theory (Schelling, Myerson, info asimétrica, focal points, signaling) y Drama Theory (Bryant: dilemas de confianza, persuasión).
 
 REGLAS:
 - Densidad sobre extensión. Cada campo es CORTO pero filoso.
-- Citás autores por nombre cuando aplica ("Schelling lo llama focal point", "Bryant: dilema de confianza").
-- Citás la decisión ESPECÍFICA del jugador, no genérico.
-- Tenés opinión. Si la cagó, lo decís sin maquillarlo. Si la rompió, lo nombrás. Nada de "excelente reflexión" vacío.
+- Citas autores por nombre cuando aplica ("Schelling lo llama focal point", "Bryant: dilema de confianza").
+- Citas la decisión ESPECÍFICA del jugador, no genérico.
+- Tienes opinión. Si la regó, lo dices sin maquillarlo. Si la rompió, lo nombras. Nada de "excelente reflexión" vacío.
 - NUNCA inventes hechos. Solo lo que está en el contexto.
 - Sin acotaciones teatrales, sin saludos.
 
@@ -222,7 +218,7 @@ FORMATO (JSON estricto, SIN markdown, SIN \`\`\`). LÍMITES DE LONGITUD ESTRICTO
   ]
 }
 
-Devolvé SOLO el JSON. Sin texto antes ni después.`;
+Devuelve SOLO el JSON. Sin texto antes ni después.`;
 
 function ScreenFeedback({ ctx, onDone, progress }) {
   const [report, setReport] = useState(null);
@@ -241,7 +237,7 @@ function ScreenFeedback({ ctx, onDone, progress }) {
 - Cómo votó Sia: ${ctx.sia_vote} ("${ctx.sia_line}")
 - Cómo votó Harrison: ${ctx.harrison_vote} ("${ctx.harrison_line}")
 
-Devolvé el JSON con tu análisis.`;
+Devuelve el JSON con tu análisis.`;
 
   useEffect(() => {
     let cancelled = false;
@@ -288,7 +284,6 @@ Devolvé el JSON con tu análisis.`;
 
   return (
     <div className="pp-screen">
-      <StatusBar />
       <TopBar progress={progress} label="M6 / 06" />
       <div className="pp-body">
         <p className="eyebrow eyebrow-dot">Análisis del run</p>

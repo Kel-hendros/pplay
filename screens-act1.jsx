@@ -4,7 +4,6 @@ function ScreenRol({ onNext, progress }) {
   const c = window.CONTENT.rol;
   return (
     <div className="pp-screen">
-      <StatusBar />
       <TopBar progress={progress} label={`M0 / 06`} />
       <div className="pp-body">
         <p className="eyebrow eyebrow-dot">Antes de empezar</p>
@@ -37,7 +36,6 @@ function ScreenM1Notif({ onOpen, onBack, progress }) {
   }, []);
   return (
     <div className="pp-screen" style={{ background: "var(--bg-2)" }}>
-      <StatusBar />
       <TopBar onBack={onBack} progress={progress} label="M1 / 06" />
       <div className="pp-body">
         <div className="notif reveal" style={{ marginBottom: 18 }}>
@@ -50,7 +48,7 @@ function ScreenM1Notif({ onOpen, onBack, progress }) {
         </div>
 
         <div className="card" style={{ borderLeft: "3px solid var(--c-rachel)" }}>
-          <div className="mono" style={{ marginBottom: 6 }}>De: Rachel Voss · Para: Vos</div>
+          <div className="mono" style={{ marginBottom: 6 }}>De: Rachel Voss · Para: Ti</div>
           <div style={{ fontFamily: "var(--serif)", fontSize: 20, marginBottom: 14 }}>{m.subject}</div>
           {m.body.slice(0, revealed + 1).map((p, i) => (
             <p key={i} className="body reveal" style={{ marginBottom: 12, color: i === m.body.length - 1 ? "var(--ink)" : "var(--ink-2)" }}>{p}</p>
@@ -97,7 +95,6 @@ function ScreenDossier({ onNext, onBack, progress }) {
   const d = window.CONTENT.dossier;
   return (
     <div className="pp-screen">
-      <StatusBar />
       <TopBar onBack={onBack} progress={progress} label="M1 / 06" />
       <div className="pp-body">
         <div className="dossier-head">
@@ -119,7 +116,7 @@ function ScreenDossier({ onNext, onBack, progress }) {
         </div>
 
         <div className="dossier-section">
-          <h3>Lo que tenés</h3>
+          <h3>Lo que tienes</h3>
           <div className="fc-grid">
             <div className="fc-col pos">
               <h4>A favor</h4>
@@ -147,7 +144,6 @@ function ScreenDossier({ onNext, onBack, progress }) {
 function ScreenTransition({ onNext, onBack, progress, content, label = "M1 / 06" }) {
   return (
     <div className="pp-screen" style={{ background: "var(--bg-2)" }}>
-      <StatusBar />
       <TopBar onBack={onBack} progress={progress} label={label} />
       <div className="pp-body">
         <div className="notif reveal" style={{ marginBottom: 22 }}>
@@ -174,7 +170,6 @@ function ScreenChoices({ onConfirm, onBack, progress }) {
   const chosen = m2.options.find(o => o.id === picked);
   return (
     <div className="pp-screen">
-      <StatusBar />
       <TopBar onBack={onBack} progress={progress} label="M2 / 06" />
       <div className="pp-body">
         <p className="eyebrow eyebrow-dot">Primera decisión</p>
@@ -224,7 +219,7 @@ function ScreenChoices({ onConfirm, onBack, progress }) {
         )}
 
         <Btn primary block lg sticky disabled={!picked} onClick={() => onConfirm(picked)}>
-          {picked ? "Confirmar decisión" : "Elegí una opción para continuar"}
+          {picked ? "Confirmar decisión" : "Elige una opción para continuar"}
         </Btn>
       </div>
     </div>

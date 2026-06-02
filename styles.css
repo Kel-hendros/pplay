@@ -1,8 +1,47 @@
 /* Perspective Play — Demo prototype styles */
 
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
+  /* === PAPER THEME — PRIMARY / DEFAULT (light) ===
+     Warm cream paper, dark-brown ink, rust accent. */
+  --bg: #f7efdd;          /* cremita bien clarito */
+  --bg-2: #f0e6cf;
+  --surface: #fdf8ec;
+  --surface-2: #f3ebd6;
+  --line: #e2d6bd;
+  --line-soft: #ece2cd;
+  --ink: #3a2417;         /* marrón oscuro — texto principal */
+  --ink-2: #6a4a32;       /* marrón medio */
+  --ink-3: #927458;       /* taupe */
+  --ink-4: #bca483;
+  --accent: #a84b25;      /* rust / óxido — el único color fuerte */
+  --accent-ink: #fdf8ec;
+  --danger: #b23120;      /* brick red */
+  --c-sia: #b06f24;       /* dorado oscurecido para leer sobre crema */
+  --c-harrison: #3c5d89;  /* azul oscurecido */
+  --c-rachel: #5d7a3c;    /* verde oscurecido */
+  --c-thorne: #9a3b3b;    /* rojo ladrillo */
+  --c-coach: #a84b25;     /* rust = accent (Marina) */
+  /* === SISTEMA TIPOGRÁFICO — solo 3 fuentes, un rol cada una ===
+     Display → --display (Instrument Sans): títulos y headings (weight 600, -0.02em).
+               El "accent clause" va en --accent, weight 600, upright (no italic).
+     Normal  → --sans    (Inter):           párrafos y textos largos
+     Mono    → --mono    (JetBrains Mono):  eyebrows, labels, meta, codes, timestamps
+     No agregar más familias ni usar una fuera de su rol. */
+  --display: 'Instrument Sans', 'Inter', -apple-system, system-ui, sans-serif;
+  --sans:    'Inter', -apple-system, system-ui, sans-serif;
+  --mono:    'JetBrains Mono', ui-monospace, monospace;
+  --serif:   var(--display); /* alias legacy — markup que aún usa --serif sigue funcionando */
+  /* Ambient warm wash — barely-there rust + gold radials over cream. */
+  --glow:
+    radial-gradient(72% 46% at 16% 6%,  rgba(168,75,37,.07),  transparent 60%),
+    radial-gradient(66% 50% at 90% 94%, rgba(176,111,36,.06), transparent 62%);
+}
+
+[data-theme="night"] {
+  /* Dark variant — near-black + electric lime. Reservado para superficies
+     especiales (p. ej. el backoffice). */
   --bg: #0c0c0e;
   --bg-2: #131316;
   --surface: #1a1a1d;
@@ -13,7 +52,7 @@
   --ink-2: #b6b4a9;
   --ink-3: #76746a;
   --ink-4: #4a4943;
-  --accent: #d4ff3a;
+  --accent: #d4ff3a;      /* electric lime */
   --accent-ink: #0c0c0e;
   --danger: #e87355;
   --c-sia: #e0a960;
@@ -21,33 +60,23 @@
   --c-rachel: #98b079;
   --c-thorne: #c97070;
   --c-coach: #d4ff3a;
-  --serif: 'Instrument Serif', 'Times New Roman', serif;
-  --sans: 'Inter', -apple-system, system-ui, sans-serif;
-  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --glow:
+    radial-gradient(70% 44% at 18% 26%, rgba(80,100,228,.20), transparent 60%),
+    radial-gradient(66% 50% at 90% 94%, rgba(152,92,226,.17), transparent 62%);
 }
 
-[data-theme="paper"] {
-  --bg: #f4f1ea;
-  --bg-2: #ebe7dc;
-  --surface: #ffffff;
-  --surface-2: #f8f5ed;
-  --line: #d8d2c2;
-  --line-soft: #e6e1d2;
-  --ink: #1a1a1c;
-  --ink-2: #4a4943;
-  --ink-3: #76746a;
-  --ink-4: #a8a397;
-  --accent: #c8553d;
-  --accent-ink: #ffffff;
-}
+/* Alias legacy: markup viejo con [data-theme="paper"] sigue resolviendo al tema por defecto. */
+[data-theme="paper"] { }
 
 * { box-sizing: border-box; }
 html, body {
   margin: 0; padding: 0;
-  background: var(--bg);
+  background: var(--glow), var(--bg);
+  background-attachment: fixed;
   color: var(--ink);
   font-family: var(--sans);
   font-size: 15px;
+  font-optical-sizing: none;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -56,28 +85,38 @@ body { min-height: 100vh; }
 button { font-family: inherit; cursor: pointer; }
 input, textarea { font-family: inherit; }
 
-/* App shell — phone viewport */
+/* App shell — phone viewport
+   El alto/ancho del teléfono debe ser FIJO. svh (small viewport height)
+   es el alto mínimo que el browser garantiza sin importar si la barra
+   está visible o no — al contrario de dvh, NO cambia al scrollear. */
 .pp-app {
   width: 100%;
   max-width: 420px;
-  min-height: 100vh;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
   margin: 0 auto;
-  background: var(--bg);
+  background: var(--glow), var(--bg);
   position: relative;
   display: flex;
   flex-direction: column;
 }
 @media (min-width: 720px) {
   body {
-    background: #050507;
+    background: var(--glow), #050507;
+    background-attachment: fixed;
     display: flex; align-items: center; justify-content: center;
     padding: 24px 0;
   }
   .pp-app {
+    /* Tamaño fijo en desktop, sin depender del viewport. */
+    width: 420px;
+    max-width: none;
+    height: 880px;
+    min-height: 880px;
+    flex-shrink: 0;
     border-radius: 44px;
     overflow: hidden;
-    min-height: 880px;
-    height: 880px;
     box-shadow:
       0 0 0 10px #0a0a0c,
       0 0 0 11px #2a2a2e,
@@ -86,20 +125,30 @@ input, textarea { font-family: inherit; }
 }
 
 .pp-screen {
-  flex: 1; display: flex; flex-direction: column;
+  flex: 1; min-height: 0; display: flex; flex-direction: column;
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
+  /* Compensa la status bar, que ahora flota absoluta arriba.
+     Si la pantalla tiene portada, se anula con --has-cover. */
+  padding-top: 44px;
 }
 .pp-screen::-webkit-scrollbar { width: 0; }
 
-/* Status bar — minimal */
+/* Cuando la pantalla tiene portada full-bleed, dejamos que la imagen
+   se vea detrás de la status bar. */
+.pp-screen--has-cover { padding-top: 0; }
+
+/* Status bar — flota absoluta encima de todo, con bg transparente. */
 .pp-status {
   display: flex; justify-content: space-between; align-items: center;
   padding: 14px 24px 8px;
   font-size: 14px; font-weight: 600;
   color: var(--ink);
-  flex-shrink: 0;
+  background: transparent;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 20;
 }
 .pp-status .pp-dots {
   display: flex; gap: 4px; align-items: center;
@@ -166,19 +215,20 @@ input, textarea { font-family: inherit; }
   vertical-align: middle; transform: translateY(-1px);
 }
 h1.display, .display {
-  font-family: var(--serif); font-weight: 400;
+  font-family: var(--serif); font-weight: 500;
   font-size: 44px; line-height: 1.08; letter-spacing: -0.01em;
   color: var(--ink); margin: 0 0 32px;
 }
 h1.display em, .display em { font-style: italic; color: var(--accent); display: inline-block; line-height: 1.12; padding-bottom: 4px; }
 h2.title {
-  font-family: var(--serif); font-weight: 400;
+  font-family: var(--serif); font-weight: 500;
   font-size: 30px; line-height: 1.08; letter-spacing: -0.01em;
   margin: 0 0 14px;
 }
 h3.subtitle {
-  font-size: 13px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.08em; color: var(--ink-2); margin: 0 0 10px;
+  font-family: var(--mono);
+  font-size: 12px; font-weight: 500; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--ink-2); margin: 0 0 10px;
 }
 p.lede {
   font-size: 17px; line-height: 1.55; color: var(--ink-2);
@@ -532,13 +582,6 @@ p.body { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); margin: 0 0 1
   z-index: 1000;
 }
 
-/* Auth + onboarding bg */
-.bg-grain::before {
-  content: ''; position: absolute; inset: 0; pointer-events: none;
-  background-image: radial-gradient(circle at 20% 0%, rgba(212,255,58,0.08), transparent 40%);
-  z-index: 0;
-}
-
 /* Field */
 .field {
   display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px;
@@ -591,6 +634,391 @@ p.body { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); margin: 0 0 1
   letter-spacing: 0.06em;
 }
 .hero-meta strong { color: var(--ink); font-weight: 600; }
+
+/* ── Series cover (portada con bg image + difuminado + título) ── */
+/* Cuando hay portada, el cuerpo arranca sin padding-top así la
+   imagen rompe sin borde contra el topbar. */
+.pp-body--with-cover { padding-top: 0; }
+
+.series-cover {
+  position: relative;
+  /* Full-bleed: sangra horizontalmente el padding del body
+     y verticalmente todo el alto necesario para pasar detrás del
+     status bar (que ahora flota encima). */
+  margin: 0 -24px 22px;
+  height: 320px;
+  display: flex; align-items: flex-end;
+  overflow: hidden;
+}
+/* El fondo de imagen va en un layer aparte y se le aplica la mask
+   para que la imagen se desvanezca hacia transparente abajo, dejando
+   ver el color (o glow) del teléfono. No hay overlay de color encima. */
+.series-cover-bg {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-mask-image: linear-gradient(
+    to top,
+    transparent 0%,
+    rgba(0, 0, 0, 0.25) 18%,
+    rgba(0, 0, 0, 0.85) 50%,
+    #000 75%
+  );
+  mask-image: linear-gradient(
+    to top,
+    transparent 0%,
+    rgba(0, 0, 0, 0.25) 18%,
+    rgba(0, 0, 0, 0.85) 50%,
+    #000 75%
+  );
+}
+.series-cover-text {
+  position: relative; z-index: 1;
+  padding: 0 24px 16px;
+  width: 100%;
+}
+.series-cover-eyebrow {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 4px;
+}
+.series-cover-back {
+  appearance: none; border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(0, 0, 0, 0.25);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  width: 26px; height: 26px; border-radius: 50%;
+  color: #fff; font-size: 14px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+  transition: background .12s;
+}
+.series-cover-back:hover { background: rgba(0, 0, 0, 0.4); }
+.series-cover-eyebrow-text {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.series-cover-title {
+  font-family: var(--serif); font-weight: 600;
+  font-size: 34px; line-height: 1.05; letter-spacing: -0.01em;
+  margin: 6px 0 0;
+  color: var(--ink);
+}
+
+/* ── Objective cards (pantalla de Capítulo) ────────────── */
+.objective-list {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.objective-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+/* El primary se destaca: ribete del color accent, fondo apenas teñido */
+.objective-card--primary {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+}
+.objective-card-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; margin-bottom: 6px;
+}
+.objective-card-label {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.objective-card--primary .objective-card-label { color: var(--accent); }
+.objective-card-pts {
+  font-family: var(--mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 999px;
+  background: var(--surface-2); color: var(--ink-2);
+  border: 1px solid var(--line);
+}
+.objective-card--primary .objective-card-pts {
+  background: var(--accent); color: var(--accent-ink);
+  border-color: var(--accent);
+}
+.objective-card-desc {
+  font-size: 14px; line-height: 1.45; color: var(--ink);
+  margin-bottom: 10px;
+}
+.objective-card-skills {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+}
+
+/* ── Learning objectives list (conceptos pedagógicos) ───── */
+.learning-list {
+  margin: 0; padding-left: 16px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.learning-list li {
+  font-size: 13.5px; line-height: 1.45; color: var(--ink-2);
+}
+.learning-list li::marker { color: var(--accent); }
+
+/* ── Login background (pantalla de auth) ───────────────── */
+.auth-bg {
+  position: absolute; inset: 0;
+  background-image: url('assets/images/login-background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Endorser card (pantalla de Serie) ─────────────────── */
+.endorser-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.endorser-card-name {
+  font-family: var(--serif); font-weight: 500;
+  font-size: 17px; line-height: 1.2; color: var(--ink);
+}
+.endorser-card-sub {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em;
+  color: var(--ink-3); margin-top: 4px;
+}
+.endorser-card-bio {
+  font-size: 13.5px; line-height: 1.5; color: var(--ink-2);
+  margin: 10px 0 0;
+}
+.biblio-year { color: var(--ink-3); font-size: 11.5px; }
+
+/* ── Season block (pantalla de Serie) ──────────────────── */
+.season-block {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px 16px 14px;
+}
+.season-block-title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: 20px; line-height: 1.15; color: var(--ink);
+  margin-bottom: 8px;
+}
+.season-block-desc {
+  font-size: 13.5px; line-height: 1.5; color: var(--ink-2);
+  margin: 0 0 12px;
+}
+.season-block-context {
+  background: var(--bg-2);
+  border-radius: 9px;
+  padding: 10px 12px;
+  margin-top: 8px;
+}
+.season-block-context-lbl {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px;
+}
+.season-block-context p {
+  margin: 0; font-size: 13px; line-height: 1.45;
+  color: var(--ink-2);
+}
+
+/* Stack de cards de serie (recomendadas y resto) */
+.series-stack {
+  display: flex; flex-direction: column; gap: 14px;
+}
+
+/* ── SeriesCard — única, con variantes hero/compact ────────────── */
+.series-card {
+  display: block; width: 100%; text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px 18px;
+  color: inherit; font: inherit;
+  position: relative; overflow: hidden;
+  cursor: pointer;
+  transition: transform .15s, border-color .15s, box-shadow .15s;
+}
+.series-card:hover {
+  border-color: var(--ink-4);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.series-card-head { margin-bottom: 12px; }
+.series-card-title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: 22px; line-height: 1.1; color: var(--ink);
+  margin-bottom: 4px;
+}
+.series-card-tagline {
+  font-size: 13.5px; color: var(--ink-2); line-height: 1.45;
+}
+
+.series-card-meta {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 14px;
+}
+.series-card-meta-chip {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-3);
+  padding: 3px 8px; border: 1px solid var(--line); border-radius: 999px;
+}
+
+.series-card-block {
+  border-top: 1px dashed var(--line);
+  padding-top: 12px; margin-top: 12px;
+}
+.series-card-block-lbl {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-3);
+  margin-bottom: 6px;
+}
+
+.series-card-skills { display: flex; flex-wrap: wrap; gap: 6px; }
+.series-card-skill {
+  font-size: 12px; color: var(--ink);
+  background: var(--surface-2); border: 1px solid var(--line);
+  padding: 4px 9px; border-radius: 6px;
+}
+
+.series-card-endorser-name {
+  font-size: 13.5px; font-weight: 600; color: var(--ink);
+}
+.series-card-endorser-sub {
+  font-size: 12px; color: var(--ink-3); margin-top: 2px;
+}
+
+.series-card-biblio {
+  margin: 0; padding: 0; list-style: none;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.series-card-biblio li {
+  font-size: 12.5px; line-height: 1.4; color: var(--ink-2);
+}
+.series-card-biblio strong { color: var(--ink); font-weight: 600; }
+
+.series-card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px; padding-top: 12px;
+  border-top: 1px dashed var(--line);
+}
+.series-card-ribbons {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.series-card-cta {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  background: var(--accent);
+  font-weight: 600;
+  padding: 5px 11px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* Ribbons — chip pequeño abajo a la izquierda de la card */
+.series-ribbon {
+  font-family: var(--mono); font-size: 9.5px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 999px;
+  border: 1px solid currentColor;
+}
+.series-ribbon--must    { color: var(--accent);    background: color-mix(in srgb, var(--accent) 8%, transparent); }
+.series-ribbon--new     { color: var(--c-rachel);  background: color-mix(in srgb, var(--c-rachel) 10%, transparent); }
+.series-ribbon--popular { color: var(--c-sia);     background: color-mix(in srgb, var(--c-sia) 10%, transparent); }
+
+/* Variante hero — más respiro, más jerarquía de título */
+.series-card--hero {
+  padding: 22px 20px;
+  border-radius: 22px;
+}
+.series-card--hero .series-card-title {
+  font-size: 30px; line-height: 1.05;
+}
+.series-card--hero .series-card-tagline {
+  font-size: 15px; color: var(--ink-2);
+}
+
+/* Variante compact — densidad consistente con el resto del catálogo */
+.series-card--compact .series-card-title { font-size: 20px; }
+.series-card--compact .series-card-tagline { font-size: 13px; }
+
+/* Hero card como botón (catálogo → serie) */
+.hero-card--link {
+  display: block; width: 100%; text-align: left;
+  font: inherit; color: inherit; cursor: pointer;
+  transition: transform .15s, border-color .15s, box-shadow .15s;
+}
+.hero-card--link:hover {
+  border-color: var(--ink-4);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+.hero-cta {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent);
+  margin-top: 16px; padding-top: 14px;
+  border-top: 1px dashed var(--line);
+  display: flex; justify-content: flex-end;
+}
+
+/* Catalog — series + chapter rows */
+.series { margin-top: 18px; }
+.series + .series { margin-top: 22px; }
+.series-head { margin-bottom: 10px; }
+.series-title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: 20px; line-height: 1.15; color: var(--ink);
+}
+.series-tagline {
+  font-size: 13px; color: var(--ink-3); margin-top: 2px; line-height: 1.4;
+}
+.series-chapters {
+  display: flex; flex-direction: column; gap: 1px;
+  background: var(--line-soft); border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--line-soft);
+}
+.chapter-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; background: var(--surface);
+  opacity: 0.7;
+}
+.chapter-row--btn {
+  width: 100%; border: 0; text-align: left;
+  font: inherit; color: inherit;
+  cursor: pointer; opacity: 1;
+  transition: background .12s;
+}
+.chapter-row--btn:hover { background: var(--surface-2); }
+.chapter-row--btn:disabled { cursor: default; opacity: 0.6; }
+.chapter-row--btn:disabled:hover { background: var(--surface); }
+.chapter-row--soon { opacity: 0.6; }
+.chapter-code {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-3);
+  min-width: 56px;
+}
+.chapter-title {
+  flex: 1; font-size: 14px; color: var(--ink-2); line-height: 1.3;
+}
+.chapter-status {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-4);
+  padding: 3px 8px; border: 1px solid var(--line); border-radius: 999px;
+  white-space: nowrap;
+}
+.chapter-status--go {
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-color: var(--accent);
+  padding: 5px 11px;
+  font-weight: 600;
+}
 
 /* Loading dots */
 .dots span {
@@ -668,7 +1096,7 @@ p.body { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); margin: 0 0 1
 }
 
 .report-verdict {
-  font-family: var(--serif); font-weight: 400;
+  font-family: var(--serif); font-weight: 500;
   font-size: 28px; line-height: 1.18; letter-spacing: -0.01em;
   color: var(--ink); margin: 4px 0 14px;
   text-wrap: pretty;
@@ -688,7 +1116,7 @@ p.body { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); margin: 0 0 1
   color: var(--ink-3); margin-bottom: 8px;
 }
 .report-section-title {
-  font-family: var(--serif); font-weight: 400;
+  font-family: var(--serif); font-weight: 500;
   font-size: 19px; line-height: 1.25; letter-spacing: -0.005em;
   color: var(--ink); margin: 0 0 10px;
 }

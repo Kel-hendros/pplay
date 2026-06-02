@@ -2,7 +2,7 @@
 
 function App() {
   const [tweaks, setTweak] = useTweaks(/*EDITMODE-BEGIN*/{
-    "theme": "dark",
+    "theme": "paper",
     "fastMode": false
   }/*EDITMODE-END*/);
 
@@ -10,7 +10,9 @@ function App() {
     document.documentElement.setAttribute("data-theme", tweaks.theme);
   }, [tweaks.theme]);
 
-  const [step, setStep] = useState("auth"); // auth | home | m0..m6 | done
+  const [step, setStep] = useState("auth"); // auth | home | series | chapter | profile | m0..m6 | done
+  const [selectedSeriesId, setSelectedSeriesId] = useState(null);
+  const [selectedChapterId, setSelectedChapterId] = useState(null);
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState({
     chapterStatus: "not_started",
@@ -37,6 +39,12 @@ function App() {
   };
 
   const handleAuth = (u) => { setUser(u); setStep("home"); };
+  const openSeries = (seriesId) => { setSelectedSeriesId(seriesId); setStep("series"); };
+  const openChapter = (seriesId, chapterId) => {
+    setSelectedSeriesId(seriesId);
+    setSelectedChapterId(chapterId);
+    setStep("chapter");
+  };
   const startChapter = () => {
     setProfile(p => ({ ...p, chapterStatus: "in_progress" }));
     setStep("m0");
@@ -64,7 +72,10 @@ function App() {
   // Render screens
   let screen = null;
   if (step === "auth") screen = <ScreenAuth onAuth={handleAuth} />;
-  else if (step === "home") screen = <ScreenHome user={user} profile={profile} onPlay={startChapter} onProfile={() => {}} />;
+  else if (step === "home") screen = <ScreenHome user={user} profile={profile} onOpenSeries={openSeries} onProfile={() => setStep("profile")} />;
+  else if (step === "series") screen = <ScreenSeries seriesId={selectedSeriesId} profile={profile} onBack={() => setStep("home")} onOpenChapter={openChapter} />;
+  else if (step === "chapter") screen = <ScreenChapter seriesId={selectedSeriesId} chapterId={selectedChapterId} profile={profile} onBack={() => setStep("series")} onPlay={startChapter} />;
+  else if (step === "profile") screen = <ScreenProfile user={user} profile={profile} onBack={() => setStep("home")} />;
   else if (step === "m0") screen = <ScreenRol progress={0} onNext={() => setStep("m1")} />;
   else if (step === "m1") screen = <ScreenM1Notif progress={1} onBack={() => setStep("m0")} onOpen={() => setStep("m1b")} />;
   else if (step === "m1b") screen = <ScreenDossier progress={1} onBack={() => setStep("m1")} onNext={() => setStep("m1c")} />;
@@ -77,7 +88,10 @@ function App() {
 
   return (
     <>
-      <div className="pp-app">{screen}</div>
+      <div className="pp-app">
+        <StatusBar />
+        {screen}
+      </div>
       <ActorInspector />
       <TweaksPanel title="Tweaks">
         <TweakSection label="Tema" />
