@@ -139,7 +139,9 @@ input, textarea { font-family: inherit; }
    se vea detrás de la status bar. */
 .pp-screen--has-cover { padding-top: 0; }
 
-/* Status bar — flota absoluta encima de todo, con bg transparente. */
+/* Status bar simulada — flota absoluta encima de todo, con bg transparente.
+   En mobile real (sin marco de teléfono) se oculta porque el dispositivo
+   ya tiene su propia status bar del OS y duplicarla sería redundante. */
 .pp-status {
   display: flex; justify-content: space-between; align-items: center;
   padding: 14px 24px 8px;
@@ -149,6 +151,11 @@ input, textarea { font-family: inherit; }
   position: absolute;
   top: 0; left: 0; right: 0;
   z-index: 20;
+}
+@media (max-width: 719px) {
+  .pp-status { display: none; }
+  /* También libero el padding-top que el .pp-screen reservaba para ella. */
+  .pp-screen { padding-top: 0; }
 }
 .pp-status .pp-dots {
   display: flex; gap: 4px; align-items: center;

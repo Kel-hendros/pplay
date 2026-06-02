@@ -16,6 +16,7 @@ const __AOI_STYLE = `
     display:flex;align-items:center;justify-content:center;cursor:pointer;
     opacity:.35;transition:opacity .15s,color .15s,border-color .15s}
   .aoi-fab:hover{opacity:1;color:var(--ink);border-color:var(--ink-4)}
+  @media (max-width: 719px) { .aoi-fab { display: none; } }
   /* Blue↔violet glass palette, scoped to the backoffice modal.
      Tweak these to retune the whole look. */
   .aoi-overlay{position:fixed;inset:0;z-index:2147483646;
