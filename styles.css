@@ -152,9 +152,13 @@ input, textarea { font-family: inherit; }
   top: 0; left: 0; right: 0;
   z-index: 20;
 }
-@media (max-width: 719px) {
+/* En dispositivos táctiles (cualquier orientación, cualquier ancho) o en
+   un viewport chico (DevTools responsive mode), ocultamos la chrome del
+   teléfono simulado. (hover:none)+(pointer:coarse) es el detector moderno
+   para "dispositivo sin mouse" — mucho más confiable que User-Agent
+   sniffing, que es frágil y antipractica. */
+@media (max-width: 719px), (hover: none) and (pointer: coarse) {
   .pp-status { display: none; }
-  /* También libero el padding-top que el .pp-screen reservaba para ella. */
   .pp-screen { padding-top: 0; }
 }
 .pp-status .pp-dots {
